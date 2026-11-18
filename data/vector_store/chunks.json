@@ -1,0 +1,412 @@
+[
+  {
+    "doc_id": "access_and_permissions.md_chunk_0",
+    "source": "access_and_permissions.md",
+    "title": "Access And Permissions",
+    "text": "# Access Control, Permissions, and Shared Drive Guide\n\n## Overview\nProcedures for requesting network file share permissions, resolving \"Access Denied\" errors, and managing SharePoint / OneDrive access.\n\n---",
+    "chunk_index": 0,
+    "category": "ACCESS_PERMISSIONS",
+    "subcategory": "SHARED_FOLDER_PERMISSIONS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "access_and_permissions.md_chunk_1",
+    "source": "access_and_permissions.md",
+    "title": "Access And Permissions",
+    "text": "## 1. Resolving \"Access Denied\" on Shared Folders\nIf you receive \"Windows cannot access \\\\filesvr\\folder - You do not have permission\":\n1. Confirm the complete UNC path:\n   - Engineering: `\\\\filesvr01.corp.internal\\engineering`\n   - Finance: `\\\\filesvr01.corp.internal\\finance`\n   - General Shared: `\\\\filesvr02.corp.internal\\shared`\n2. Open PowerShell and check your Active Directory group memberships:\n   ```cmd\n   whoami /groups\n   ```\n3. If your manager recently granted access, your Kerberos ticket must be refreshed:\n   ```cmd\n   klist purge\n   ```\n4. Sign out of Windows (`Ctrl + Alt + Del` -> **Sign out**) and log back in to renew your security token with updated group SIDs.\n\n---",
+    "chunk_index": 1,
+    "category": "ACCESS_PERMISSIONS",
+    "subcategory": "SHARED_FOLDER_PERMISSIONS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "access_and_permissions.md_chunk_2",
+    "source": "access_and_permissions.md",
+    "title": "Access And Permissions",
+    "text": "## 2. Requesting Access to Restricted Network Shares\n1. Navigate to the corporate identity portal: `https://access.company.com`.\n2. Search for the target folder or security group name (e.g., `SG-Finance-ReadWrite`).\n3. Enter your business justification and select your department manager for approval.\n4. Once your manager approves, Active Directory replication completes within 30 minutes.\n\n---",
+    "chunk_index": 2,
+    "category": "ACCESS_PERMISSIONS",
+    "subcategory": "SHARED_FOLDER_PERMISSIONS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "access_and_permissions.md_chunk_3",
+    "source": "access_and_permissions.md",
+    "title": "Access And Permissions",
+    "text": "## 3. SharePoint and OneDrive Permission Errors\nIf a web link shows \"You need permission to access this site\":\n1. Click **Request Access** directly on the Microsoft 365 page.\n2. Ensure you are signed into the browser with your corporate email (`username@company.com`) rather than a personal Microsoft account.\n3. If OneDrive client fails to sync, run:\n   ```cmd\n   %localappdata%\\Microsoft\\OneDrive\\onedrive.exe /reset\n   ```",
+    "chunk_index": 3,
+    "category": "ACCESS_PERMISSIONS",
+    "subcategory": "SHARED_FOLDER_PERMISSIONS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "cloud_and_database.md_chunk_0",
+    "source": "cloud_and_database.md",
+    "title": "Cloud And Database",
+    "text": "# Cloud Infrastructure and Corporate Database Access Guide\n\n## Overview\nProtocols for troubleshooting Azure/AWS cloud services, database connectivity errors, and SQL query timeouts.\n\n---\n\n## 1. Corporate Database Connection Failures\nIf client applications report \"Cannot connect to SQL Server\" or \"Connection Timeout Expired\":\n1. Check VPN connectivity: Corporate databases are restricted behind private VPC subnets. Ensure your VPN client is connected.\n2. Verify TCP port reachability:\n   ```cmd\n   Test-NetConnection -ComputerName sqlsvr01.corp.internal -Port 1433\n   ```\n3. If port test fails with `TcpTestSucceeded: False`, check with Network Operations for security group firewall rules.\n\n---",
+    "chunk_index": 0,
+    "category": "CLOUD_SERVICES",
+    "subcategory": "DATABASE_AND_CLOUD",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "cloud_and_database.md_chunk_1",
+    "source": "cloud_and_database.md",
+    "title": "Cloud And Database",
+    "text": "## 2. Cloud Services & Virtual Machine Errors\nIf your Azure Virtual Machine or AWS workspace is unresponsive:\n1. Access the Cloud Self-Service Console: `https://cloud.company.com`.\n2. Check VM instance status (Running / Stopped / Deallocated).\n3. If CPU is pegged at 100%, trigger a **Restart** from the cloud portal action menu.\n4. Verify your assigned IAM role in Okta Cloud Management.",
+    "chunk_index": 1,
+    "category": "CLOUD_SERVICES",
+    "subcategory": "DATABASE_AND_CLOUD",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "cybersecurity_incidents.md_chunk_0",
+    "source": "cybersecurity_incidents.md",
+    "title": "Cybersecurity Incidents",
+    "text": "# Enterprise Cybersecurity Incident & Threat Response Guide\n\n## Overview\nStandard procedures for responding to suspicious login alerts, phishing emails, malware detection, and unauthorized account access.\n\n---\n\n## 1. Suspicious Login Alerts & Unauthorized Access\nIf you receive an email or authenticator alert regarding \"Unfamiliar sign-in detected\" or login from an unknown location/IP:\n1. Immediately open `https://mysignins.microsoft.com` from a verified corporate workstation.\n2. Review the recent activity log for the suspicious timestamp.\n3. Click **\"This wasn't me\"** to trigger automated session revocation.\n4. Immediately change your corporate password using Self-Service Password Reset (SSPR).\n5. Contact the Security Operations Center (SOC) hotline at `ext. 4444`.\n\n---",
+    "chunk_index": 0,
+    "category": "CYBERSECURITY",
+    "subcategory": "PHISHING_AND_THREATS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "cybersecurity_incidents.md_chunk_1",
+    "source": "cybersecurity_incidents.md",
+    "title": "Cybersecurity Incidents",
+    "text": "## 2. Phishing Email Reporting\nIf you receive an email requesting urgent gift cards, password verification, or wire transfers:\n1. Do NOT click any links, open attachments, or reply to the sender.\n2. Click the **Report Phishing** button in the Outlook top ribbon.\n3. The email will be automatically moved to Quarantine and analyzed in the SOC security sandbox.\n4. If you already entered credentials on a link, disconnect network immediately and call Security.\n\n---",
+    "chunk_index": 1,
+    "category": "CYBERSECURITY",
+    "subcategory": "PHISHING_AND_THREATS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "cybersecurity_incidents.md_chunk_2",
+    "source": "cybersecurity_incidents.md",
+    "title": "Cybersecurity Incidents",
+    "text": "## 3. Malware and Endpoint Virus Isolation\nIf Windows Defender or CrowdStrike alerts to malware or ransomware:\n1. Disconnect Ethernet cable and toggle off Wi-Fi immediately to prevent lateral spread.\n2. Do NOT reboot the computer (rebooting can trigger persistent rootkit execution or ransomware locking).\n3. Notify IT Security immediately for remote forensic triage and endpoint re-imaging.",
+    "chunk_index": 2,
+    "category": "CYBERSECURITY",
+    "subcategory": "PHISHING_AND_THREATS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "email_and_outlook.md_chunk_0",
+    "source": "email_and_outlook.md",
+    "title": "Email And Outlook",
+    "text": "# Microsoft 365 Outlook & Teams Troubleshooting\n\n## Overview\nRemediation procedures for common Microsoft 365 desktop client failures, indexing problems, shared mailbox synchronization issues, and Microsoft Teams cache corruption.\n\n---",
+    "chunk_index": 0,
+    "category": "EMAIL_COLLABORATION",
+    "subcategory": "EMAIL_AND_TEAMS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "email_and_outlook.md_chunk_1",
+    "source": "email_and_outlook.md",
+    "title": "Email And Outlook",
+    "text": "## 1. Outlook Crashes or Freezes on Startup\n- **Safe Mode Test**:\n  - Press `Win + R`, type `outlook.exe /safe` and press Enter.\n  - If Outlook opens normally in Safe Mode, a COM Add-in is causing the crash.\n  - Go to `File -> Options -> Add-ins -> Manage: COM Add-ins -> Go`.\n  - Uncheck non-Microsoft add-ins (e.g. Acrobat PDF maker, legacy CRM plugins).\n\n- **Corrupted OST Cache File**:\n  1. Close Outlook completely.\n  2. Press `Win + R`, enter `%localappdata%\\Microsoft\\Outlook`.\n  3. Rename your email data file (e.g., `user@company.com.ost` to `user@company.com.ost.old`).\n  4. Launch Outlook. A clean `.ost` file will download from Microsoft 365 Exchange Online.\n\n---",
+    "chunk_index": 1,
+    "category": "EMAIL_COLLABORATION",
+    "subcategory": "EMAIL_AND_TEAMS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "email_and_outlook.md_chunk_2",
+    "source": "email_and_outlook.md",
+    "title": "Email And Outlook",
+    "text": "## 2. Shared Mailbox Issues (Not Updating or Crashing)\nWhen users have permission to high-volume shared mailboxes (e.g., `support@company.com`):\n1. In Outlook, click **File -> Account Settings -> Account Settings**.\n2. Select your account and click **Change**.\n3. Click **More Settings -> Advanced tab**.\n4. Uncheck **\"Download shared folders\"** (this switches shared mailboxes to Online Mode and prevents local cache bloat).\n5. Click Apply -> OK, and restart Outlook.\n\n---",
+    "chunk_index": 2,
+    "category": "EMAIL_COLLABORATION",
+    "subcategory": "EMAIL_AND_TEAMS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "email_and_outlook.md_chunk_3",
+    "source": "email_and_outlook.md",
+    "title": "Email And Outlook",
+    "text": "## 3. Microsoft Teams Audio, Video, or Cache Glitches\nIf Teams is stuck loading, fails to detect webcam/microphone, or fails to join meetings:\n1. Quit Microsoft Teams completely (right-click Teams icon in tray -> Quit).\n2. For New Teams (Work or School):\n   - Open Windows Settings -> Apps -> Installed Apps -> Microsoft Teams.\n   - Click the three dots -> **Advanced options** -> Click **Reset**.\n3. For Classic Teams:\n   - Run `rmdir /s /q \"%appdata%\\Microsoft\\Teams\"` in Command Prompt.\n4. Restart Microsoft Teams.",
+    "chunk_index": 3,
+    "category": "EMAIL_COLLABORATION",
+    "subcategory": "EMAIL_AND_TEAMS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "password_and_mfa.md_chunk_0",
+    "source": "password_and_mfa.md",
+    "title": "Password And Mfa",
+    "text": "# Password Reset and Multi-Factor Authentication (MFA) Guide\n\n## Overview\nProcedures for managing passwords, recovering locked accounts, and resetting MFA authenticators (Microsoft Authenticator, Okta Verify, FIDO2 Security Keys).\n\n---\n\n## 1. Corporate Password Policy\n- **Minimum Length**: 14 characters.\n- **Complexity**: Must include at least 1 uppercase letter, 1 lowercase letter, 1 numeric digit, and 1 special symbol (`!@#$%^&*`).\n- **History Rule**: Cannot reuse the last 12 passwords.\n- **Lockout Policy**: Account is locked automatically for 15 minutes following 5 consecutive incorrect password attempts.\n\n---",
+    "chunk_index": 0,
+    "category": "ACCOUNT_AUTHENTICATION",
+    "subcategory": "MFA_AND_PASSWORD",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "password_and_mfa.md_chunk_1",
+    "source": "password_and_mfa.md",
+    "title": "Password And Mfa",
+    "text": "## 2. Self-Service Password Reset (SSPR)\nIf you know your secondary verification method (SMS, secondary email, or authenticator app):\n1. Navigate to the identity portal: `https://passwordreset.microsoftonline.com` (or company SSO portal `https://sso.company.com/idp`).\n2. Enter your work email address (`username@company.com`).\n3. Complete the two verification steps requested by the portal.\n4. Set a compliant new password.\n5. Wait 60 seconds for Active Directory sync across domain controllers before logging in.\n\n---",
+    "chunk_index": 1,
+    "category": "ACCOUNT_AUTHENTICATION",
+    "subcategory": "MFA_AND_PASSWORD",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "password_and_mfa.md_chunk_2",
+    "source": "password_and_mfa.md",
+    "title": "Password And Mfa",
+    "text": "## 3. Account Locked Out\n- If locked out, please wait **15 minutes** for the automated counter to reset.\n- If immediate access is required for critical work:\n  - An IT Service Desk Tier 1 technician can manually run:\n    ```powershell\n    Unlock-ADAccount -Identity \"sjenkins\"\n    ```\n  - Verify caller identity via HR employee ID and manager email before unlocking.\n\n---",
+    "chunk_index": 2,
+    "category": "ACCOUNT_AUTHENTICATION",
+    "subcategory": "MFA_AND_PASSWORD",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "password_and_mfa.md_chunk_3",
+    "source": "password_and_mfa.md",
+    "title": "Password And Mfa",
+    "text": "## 4. Resetting or Transferring Authenticator to a New Phone\nWhen switching smartphones, old MFA pushes will not arrive on the new device automatically.\n- **Standard Self-Service**:\n  1. Access `https://mysignins.microsoft.com/security-info` from an already trusted corporate laptop.\n  2. Click **+ Add sign-in method** -> Choose **Authenticator App**.\n  3. Scan the QR code using the new phone's camera inside the app.\n  4. Complete the 2-digit number challenge to activate.\n  5. Delete the obsolete phone from the security info list.\n- **When Locked Out of All Methods**:\n  - Service Desk will issue a **Temporary Access Pass (TAP)**.\n  - A TAP is a time-limited passcode (valid for 8 hours) enabling one-time sign-in to register new MFA methods.",
+    "chunk_index": 3,
+    "category": "ACCOUNT_AUTHENTICATION",
+    "subcategory": "MFA_AND_PASSWORD",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "printer_and_hardware.md_chunk_0",
+    "source": "printer_and_hardware.md",
+    "title": "Printer And Hardware",
+    "text": "# Network Printer, Peripherals and Docking Station Guide\n\n## Overview\nHow to map network printers, unfreeze stuck print queues, and troubleshoot USB-C docking stations and external monitors.\n\n---\n\n## 1. Connecting to Corporate Printers\n1. Press `Win + R`, type the print server path:\n   - NY Office: `\\\\printsvr01.corp.internal`\n   - London Office: `\\\\printsvr02.corp.internal`\n2. Press Enter. A window displaying available printers will open.\n3. Locate your floor printer (e.g., `NYC-4F-Color-Printer`).\n4. Right-click and select **Connect**. Windows will download drivers automatically.\n5. Set as default printer in `Settings -> Bluetooth & devices -> Printers & scanners`.\n\n---",
+    "chunk_index": 0,
+    "category": "HARDWARE",
+    "subcategory": "PRINTER_AND_DOCKS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "printer_and_hardware.md_chunk_1",
+    "source": "printer_and_hardware.md",
+    "title": "Printer And Hardware",
+    "text": "## 2. Fixing \"Printer Offline\" or Stuck Print Queue\nIf print jobs are stuck in queue and cannot be cancelled:\n1. Open PowerShell / Command Prompt as Administrator.\n2. Run the following cleanup commands:\n   ```cmd\n   net stop spooler\n   del /Q /F /S \"%systemroot%\\System32\\Spool\\Printers\\*.*\"\n   net start spooler\n   ```\n3. Restart the printer using the physical power toggle switch on the front panel.\n4. Verify the printer has not entered sleep mode or run out of paper in Tray 2.\n\n---",
+    "chunk_index": 1,
+    "category": "HARDWARE",
+    "subcategory": "PRINTER_AND_DOCKS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "printer_and_hardware.md_chunk_2",
+    "source": "printer_and_hardware.md",
+    "title": "Printer And Hardware",
+    "text": "## 3. External Monitor Not Detected via USB-C Dock (Thunderbolt / DisplayLink)\n1. Unplug the USB-C / Thunderbolt cable from laptop, wait 10 seconds, and replug.\n2. Power cycle the docking station by disconnecting its power adapter for 15 seconds.\n3. On Windows, press `Win + Ctrl + Shift + B` to trigger an instant graphics driver restart (screen will flicker briefly and beep).\n4. In Windows Display Settings, click **Detect** under Multiple displays.\n5. Check if DisplayLink Manager software is running in system tray.",
+    "chunk_index": 2,
+    "category": "HARDWARE",
+    "subcategory": "PRINTER_AND_DOCKS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "software_access_and_security.md_chunk_0",
+    "source": "software_access_and_security.md",
+    "title": "Software Access And Security",
+    "text": "# Software Deployment, Permissions, and Security Policies\n\n## Overview\nStandard protocols for requesting software installations, elevated local administrator privileges, reporting phishing incidents, and BitLocker recovery.\n\n---\n\n## 1. Approved Software Installation (Company Portal / Intune)\n- Employees must NOT download `.exe` / `.msi` installers from random web browsers.\n- To install pre-approved IT catalog applications (VS Code, Slack, Zoom, Postman, Docker, Git):\n  1. Open the Start menu and type **Company Portal**.\n  2. Search for the required application in the catalog.\n  3. Click **Install**. Intune will silently install with authorized system privileges.\n\n---",
+    "chunk_index": 0,
+    "category": "ACCESS_PERMISSIONS",
+    "subcategory": "SHARED_FOLDER_PERMISSIONS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "software_access_and_security.md_chunk_1",
+    "source": "software_access_and_security.md",
+    "title": "Software Access And Security",
+    "text": "## 2. Requesting Temporary Local Administrator Rights\n- Standard employee accounts run as non-privileged users to prevent ransomware spread.\n- If elevation is needed for debugging, driver updates, or development:\n  1. Open **Make Me Admin** or **Endpoint Privilege Management (EPM)** from system tray.\n  2. Enter the business justification and ticket ID.\n  3. Elevation is automatically granted for 30 minutes, after which rights revert to standard user.\n\n---",
+    "chunk_index": 1,
+    "category": "ACCESS_PERMISSIONS",
+    "subcategory": "SHARED_FOLDER_PERMISSIONS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "software_access_and_security.md_chunk_2",
+    "source": "software_access_and_security.md",
+    "title": "Software Access And Security",
+    "text": "## 3. Reporting Suspicious Emails & Phishing\n- If you receive an email asking for password verification, gift cards, or emergency wire transfers:\n  1. Do NOT click links or open attachments.\n  2. Click the **Report Phishing** (PhishAlarm / Defender) button in the Outlook top ribbon.\n  3. The message is automatically moved to the Junk folder and sent to the SOC (Security Operations Center) team for sandbox analysis.\n  4. If you already clicked a link or entered your credentials, immediately disconnect your PC from Wi-Fi / Ethernet and phone the IT Security Hotline at `ext. 4444`.\n\n---",
+    "chunk_index": 2,
+    "category": "ACCESS_PERMISSIONS",
+    "subcategory": "SHARED_FOLDER_PERMISSIONS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "software_access_and_security.md_chunk_3",
+    "source": "software_access_and_security.md",
+    "title": "Software Access And Security",
+    "text": "## 4. BitLocker Drive Encryption Recovery\nIf Windows boots into the blue \"BitLocker recovery - Enter the recovery key for this drive\" screen:\n1. Access `https://aka.ms/myrecoverykey` on your smartphone using your corporate Microsoft account.\n2. Match the 8-character Key ID shown on the laptop screen with the Key ID in the portal.\n3. Type the 48-digit numerical recovery key and press Enter.",
+    "chunk_index": 3,
+    "category": "ACCESS_PERMISSIONS",
+    "subcategory": "SHARED_FOLDER_PERMISSIONS",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "system_crash_and_bsod.md_chunk_0",
+    "source": "system_crash_and_bsod.md",
+    "title": "System Crash And Bsod",
+    "text": "# Windows System Crash, Freezing, and Unexpected Shutdown Remediation\n\n## Overview\nDiagnostic protocols for unexpected computer shutdown, system freezing, Blue Screen of Death (BSOD) crashes, and Kernel-Power stop events on enterprise workstations.\n\n---",
+    "chunk_index": 0,
+    "category": "OPERATING_SYSTEM",
+    "subcategory": "UNEXPECTED_SHUTDOWN",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "system_crash_and_bsod.md_chunk_1",
+    "source": "system_crash_and_bsod.md",
+    "title": "System Crash And Bsod",
+    "text": "## 1. Unexpected Computer Shutdown & System Freezing\nWhen a computer or laptop abruptly freezes and powers off while in operation:\n1. **Power & Battery Verification**:\n   - Verify whether the laptop was running on battery or connected to an authorized AC power charger.\n   - Check if the charging status LED is illuminated (amber = charging, white = full).\n2. **Thermal Safety Cut-off (Overheating)**:\n   - Sudden shutdowns during active work are most commonly triggered by the motherboard's thermal protection circuit when CPU/GPU temperature exceeds 100\u00b0C.\n   - Verify that cooling air vents, fan exhaust ports, and bottom intake grills are completely unobstructed.\n   - Ensure the laptop is used on a hard, flat surface rather than soft fabric or lap.\n3. **Hard EC Power Drain**:",
+    "chunk_index": 1,
+    "category": "OPERATING_SYSTEM",
+    "subcategory": "UNEXPECTED_SHUTDOWN",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "system_crash_and_bsod.md_chunk_2",
+    "source": "system_crash_and_bsod.md",
+    "title": "System Crash And Bsod",
+    "text": "- Ensure the laptop is used on a hard, flat surface rather than soft fabric or lap.\n3. **Hard EC Power Drain**:\n   - Disconnect the AC adapter, USB-C docking station, and all external devices.\n   - Press and hold the physical power button continuously for **30 seconds** to drain residual capacitive charge from the motherboard.\n   - Reconnect only the AC power adapter and attempt to power on.\n4. **Kernel-Power Event Inspection**:\n   - Open Event Viewer (`eventvwr.msc`) -> **Windows Logs** -> **System**.\n   - Filter for **Event ID 41 (Kernel-Power)** and **Event ID 6008 (Unexpected Shutdown)** to identify bugcheck parameters.\n5. **Run Hardware Diagnostics**:\n   - Restart the system and immediately tap `F12` (Dell) or `F2` (HP/Lenovo) to access hardware diagnostics.",
+    "chunk_index": 2,
+    "category": "OPERATING_SYSTEM",
+    "subcategory": "UNEXPECTED_SHUTDOWN",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "system_crash_and_bsod.md_chunk_3",
+    "source": "system_crash_and_bsod.md",
+    "title": "System Crash And Bsod",
+    "text": "- Restart the system and immediately tap `F12` (Dell) or `F2` (HP/Lenovo) to access hardware diagnostics.\n   - Execute self-tests on CPU, Motherboard, and Battery Health.",
+    "chunk_index": 3,
+    "category": "OPERATING_SYSTEM",
+    "subcategory": "UNEXPECTED_SHUTDOWN",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "system_crash_and_bsod.md_chunk_4",
+    "source": "system_crash_and_bsod.md",
+    "title": "System Crash And Bsod",
+    "text": "---",
+    "chunk_index": 4,
+    "category": "OPERATING_SYSTEM",
+    "subcategory": "UNEXPECTED_SHUTDOWN",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "system_crash_and_bsod.md_chunk_5",
+    "source": "system_crash_and_bsod.md",
+    "title": "System Crash And Bsod",
+    "text": "## 2. Top Blue Screen (BSOD) Stop Codes\n- **`IRQL_NOT_LESS_OR_EQUAL`**:\n  - Faulty device driver accessing an invalid memory address. Update Wi-Fi and display drivers.\n- **`MEMORY_MANAGEMENT`**:\n  - Physical RAM stick defect, failing memory channel, or corrupted pagefile.\n- **`CRITICAL_PROCESS_DIED`**:\n  - Essential Windows background subsystem (`csrss.exe` or `wininit.exe`) terminated unexpectedly.\n- **`INACCESSIBLE_BOOT_DEVICE`**:\n  - Storage drive controller driver missing after BIOS update or BitLocker storage controller mismatch.\n\n---",
+    "chunk_index": 5,
+    "category": "OPERATING_SYSTEM",
+    "subcategory": "UNEXPECTED_SHUTDOWN",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "system_crash_and_bsod.md_chunk_6",
+    "source": "system_crash_and_bsod.md",
+    "title": "System Crash And Bsod",
+    "text": "## 3. Standard Windows File Integrity Scans\nRun PowerShell or cmd as Administrator:\n```powershell\n# 1. Scan and repair protected system files\nsfc /scannow\n\n# 2. Repair Windows Component Store image\nDISM /Online /Cleanup-Image /RestoreHealth\n\n# 3. Check disk file system integrity\nchkdsk C: /f /r\n```\n\n---\n\n## 4. Running Windows Memory Diagnostic\n1. Press `Win + R`, type `mdsched.exe` and press Enter.\n2. Choose **\"Restart now and check for problems (recommended)\"**.\n3. The computer will reboot into the memory diagnostic tool and perform two test passes.\n4. Any detected hardware memory faults indicate the laptop must be scheduled for IT depot motherboard/RAM replacement.\n\n---",
+    "chunk_index": 6,
+    "category": "OPERATING_SYSTEM",
+    "subcategory": "UNEXPECTED_SHUTDOWN",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "system_crash_and_bsod.md_chunk_7",
+    "source": "system_crash_and_bsod.md",
+    "title": "System Crash And Bsod",
+    "text": "## 5. Collecting Minidump Files\nWhen escalating a recurring crash ticket to Tier 3 Engineering:\n- Crash dumps are saved to: `C:\\Windows\\Minidump\\*.dmp`\n- Copy the latest `.dmp` file and attach it to the IT support ticket for WinDbg stack trace analysis.",
+    "chunk_index": 7,
+    "category": "OPERATING_SYSTEM",
+    "subcategory": "UNEXPECTED_SHUTDOWN",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "vpn_troubleshooting.md_chunk_0",
+    "source": "vpn_troubleshooting.md",
+    "title": "Vpn Troubleshooting",
+    "text": "# Corporate VPN Troubleshooting Guide\n\n## Overview\nThis guide provides remediation steps for remote employees experiencing connectivity issues with corporate VPN clients (Cisco AnyConnect / GlobalProtect).\n\n## Common Symptoms and Error Messages\n1. \"The VPN client agent was unable to create the interprocess communication depot.\"\n2. \"Connection attempt has failed due to server certificate issues.\"\n3. \"Secure Gateway connection timed out at 85%.\"\n4. \"Login failed: Authentication credentials or MFA token invalid.\"\n\n---",
+    "chunk_index": 0,
+    "category": "VPN",
+    "subcategory": "VPN_CONNECTIVITY",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "vpn_troubleshooting.md_chunk_1",
+    "source": "vpn_troubleshooting.md",
+    "title": "Vpn Troubleshooting",
+    "text": "## Step-by-Step Diagnostic & Resolution Procedures",
+    "chunk_index": 1,
+    "category": "VPN",
+    "subcategory": "VPN_CONNECTIVITY",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "vpn_troubleshooting.md_chunk_2",
+    "source": "vpn_troubleshooting.md",
+    "title": "Vpn Troubleshooting",
+    "text": "### Issue 1: Gateway Connection Timed Out (Hang at 85% or 93%)\n- **Root Cause**: MTU (Maximum Transmission Unit) packet fragmentation caused by home ISP routers or IPv6 tunneling conflicts.\n- **Remediation Steps**:\n  1. Open Command Prompt (cmd) as Administrator.\n  2. Flush DNS cache and release IP configuration:\n     ```cmd\n     ipconfig /flushdns\n     ipconfig /release\n     ipconfig /renew\n     ```\n  3. Disable IPv6 on your active Wi-Fi / Ethernet adapter:\n     - Open `ncpa.cpl` (Network Connections).\n     - Right-click your network adapter -> Properties.\n     - Uncheck **Internet Protocol Version 6 (TCP/IPv6)**.\n     - Click OK and reconnect to VPN.\n  4. If problem persists, switch gateway from primary `vpn-global.company.com` to secondary `vpn-east.company.com`.\n\n---",
+    "chunk_index": 2,
+    "category": "VPN",
+    "subcategory": "VPN_CONNECTIVITY",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "vpn_troubleshooting.md_chunk_3",
+    "source": "vpn_troubleshooting.md",
+    "title": "Vpn Troubleshooting",
+    "text": "### Issue 2: MFA Push Notification Not Received During VPN Login\n- **Root Cause**: Authenticator app out of sync or cellular/Wi-Fi background data disabled.\n- **Remediation Steps**:\n  1. Ensure phone has an active internet connection.\n  2. Open the Microsoft Authenticator / Duo Mobile app manually.\n  3. Instead of waiting for a push prompt, enter the 6-digit one-time passcode (OTP) directly into the VPN password prompt appending it as: `Password123,123456`.\n  4. If device was recently replaced, contact IT Support to issue a Temporary Access Pass (TAP).\n\n---",
+    "chunk_index": 3,
+    "category": "VPN",
+    "subcategory": "VPN_CONNECTIVITY",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "vpn_troubleshooting.md_chunk_4",
+    "source": "vpn_troubleshooting.md",
+    "title": "Vpn Troubleshooting",
+    "text": "### Issue 3: Virtual Network Adapter Missing or Corrupt\n- **Symptoms**: Error message: \"Unable to contact VPN adapter\" or virtual adapter not showing in Network Connections.\n- **Remediation Steps**:\n  1. Press `Win + X` and select **Device Manager**.\n  2. Expand **Network adapters**.\n  3. Locate \"Cisco AnyConnect Virtual Adapter\" or \"PANGP Virtual Ethernet Adapter\".\n  4. Right-click and choose **Uninstall device** (do NOT check delete driver files).\n  5. In the top menu, click **Action -> Scan for hardware changes**.\n  6. Reboot your computer.\n\n---",
+    "chunk_index": 4,
+    "category": "VPN",
+    "subcategory": "VPN_CONNECTIVITY",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "vpn_troubleshooting.md_chunk_5",
+    "source": "vpn_troubleshooting.md",
+    "title": "Vpn Troubleshooting",
+    "text": "### Issue 4: Split-Tunneling and Subnet Conflict\n- **Symptoms**: Unable to reach internal corporate sites (e.g. `jira.corp.internal`) or local printer stops responding when VPN is active.\n- **Remediation**:\n  - Ensure your home router local subnet is NOT using `10.0.0.0/8` or `172.16.0.0/12`.\n  - Corporate networks utilize `10.x.x.x`. If your home router assigns `10.0.0.x`, change your home router DHCP range to `192.168.1.x` to avoid IP address overlap.",
+    "chunk_index": 5,
+    "category": "VPN",
+    "subcategory": "VPN_CONNECTIVITY",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "wifi_and_network.md_chunk_0",
+    "source": "wifi_and_network.md",
+    "title": "Wifi And Network",
+    "text": "# Office Wi-Fi and Local Network Connectivity\n\n## Overview\nGuidelines for connecting corporate laptops and mobile devices to enterprise Wi-Fi networks (`Corp-Secure` and `Corp-Guest`), and resolving common network drops.\n\n---\n\n## 1. Network SSIDs\n- **`Corp-Secure`**: \n  - Uses 802.1X EAP-TLS authentication with corporate machine certificate.\n  - No password prompt should be shown. If prompted for password, select PEAP and use domain credentials (`CORP\\username`).\n- **`Corp-Guest`**: \n  - For visitors and personal mobile phones.\n  - Requires accepting terms on captive portal popup at `http://guest.wifi.local`.\n\n---",
+    "chunk_index": 0,
+    "category": "NETWORK_CONNECTIVITY",
+    "subcategory": "WIFI_AND_NETWORK",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "wifi_and_network.md_chunk_1",
+    "source": "wifi_and_network.md",
+    "title": "Wifi And Network",
+    "text": "## 2. Resolving \"No Internet, Secured\" on Windows\n1. Verify IP configuration:\n   - Run `ipconfig /all` in cmd.\n   - If IPv4 starts with `169.254.x.x`, APIPA is assigned because DHCP server did not respond.\n2. Renew IP lease and DNS cache:\n   ```cmd\n   netsh winsock reset\n   netsh int ip reset\n   ipconfig /release\n   ipconfig /renew\n   ipconfig /flushdns\n   ```\n3. Restart the machine to apply Winsock reset.\n\n---",
+    "chunk_index": 1,
+    "category": "NETWORK_CONNECTIVITY",
+    "subcategory": "WIFI_AND_NETWORK",
+    "document_type": "troubleshooting_guide"
+  },
+  {
+    "doc_id": "wifi_and_network.md_chunk_2",
+    "source": "wifi_and_network.md",
+    "title": "Wifi And Network",
+    "text": "## 3. Wi-Fi Adapter Disconnecting Intermittently\n- **Root Cause**: Power Management disabling the wireless adapter during idle periods.\n- **Fix**:\n  1. Open Device Manager (`devmgmt.msc`).\n  2. Expand **Network adapters** -> Right-click Wi-Fi adapter (e.g. Intel Wi-Fi 6E AX211) -> **Properties**.\n  3. Go to the **Power Management** tab.\n  4. Uncheck **\"Allow the computer to turn off this device to save power\"**.\n  5. Click OK.",
+    "chunk_index": 2,
+    "category": "NETWORK_CONNECTIVITY",
+    "subcategory": "WIFI_AND_NETWORK",
+    "document_type": "troubleshooting_guide"
+  }
+]
